@@ -2,6 +2,8 @@
 
 pragma solidity 0.8.20;
 
+import "../interface/ERC20Interface.sol";
+
 library SafeToken {
     function myBalance(address token) internal view returns (uint256) {
         return ERC20Interface(token).balanceOf(address(this));
