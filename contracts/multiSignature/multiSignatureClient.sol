@@ -14,7 +14,7 @@ interface IMultiSignature {
 }
 
 contract multiSignatureClient {
-    uint256 private constant multiSignaturePosition = uint256(keccak256("org.multiSignature.storge")));
+    uint256 private constant multiSignaturePosition = uint256(keccak256("org.multiSignature.storge"));
     uint256 private constant defaultIndex = 0;
 
     /**
