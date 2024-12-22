@@ -30,7 +30,7 @@ contract multiSignatureClient {
      * @dev 
      */
     function getMultiSignatureAddress() public view returns(address){
-        return address(getValue(multiSignaturePosition)));
+        return address(getValue(multiSignaturePosition));
     }
 
     modifier validCall {
