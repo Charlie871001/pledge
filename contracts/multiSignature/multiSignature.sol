@@ -43,11 +43,11 @@ library whiteListAddress {
      * @param temp  address to check
      */
     function isEligibleAddress(
-        address[] memory _whiteList,
+        address[] memory whiteList,
         address temp
     ) internal pure returns (bool) {
-        for (uint i = 0; i < _whiteList.length; i++) {
-            if (temp == _whiteList[i]) {
+        for (uint i = 0; i < whiteList.length; i++) {
+            if (temp == whiteList[i]) {
                 return true;
             }
         }
@@ -55,6 +55,23 @@ library whiteListAddress {
     }
 }
 
-contract multiSignature is multiSignatureClient {
+contract MultiSignatureClient is MultiSignatureClient {
+    uint256 private constant defaultIndex = 0;
+    using whiteListAddress for address[];
+    // owner list
+    address[] public signatureOwners;
+    uint256 public threshold;
+    // signature list
+    struct signatureInfo {
+        address applicant;
+        address[] signatures;
+    }
+    // mapping of hash to signature list
+    mapping (bytes32 => signatureInfo[]) public signatureMap;
 
+    constructor(address[] memory owners,uint256 limitedSignNum)MultiSignatureClient(address(this)){
+        require(owners.length >= limitedSignNum,"Multiple Signature : owners length should be greater than or equal to limitedSignNum");
+        signatureOwners = owners;
+        threshold = limitedSignNum;
+    }
 }

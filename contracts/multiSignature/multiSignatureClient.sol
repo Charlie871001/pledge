@@ -13,7 +13,7 @@ interface IMultiSignature {
     ) external view returns (uint256);
 }
 
-contract multiSignatureClient {
+contract MultiSignatureClient {
     uint256 private constant multiSignaturePosition = uint256(keccak256("org.multiSignature.storge"));
     uint256 private constant defaultIndex = 0;
 
