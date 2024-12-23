@@ -67,11 +67,33 @@ contract MultiSignatureClient is MultiSignatureClient {
         address[] signatures;
     }
     // mapping of hash to signature list
-    mapping (bytes32 => signatureInfo[]) public signatureMap;
+    mapping(bytes32 => signatureInfo[]) public signatureMap;
 
-    constructor(address[] memory owners,uint256 limitedSignNum)MultiSignatureClient(address(this)){
-        require(owners.length >= limitedSignNum,"Multiple Signature : owners length should be greater than or equal to limitedSignNum");
+    constructor(
+        address[] memory owners,
+        uint256 limitedSignNum
+    ) MultiSignatureClient(address(this)) {
+        require(
+            owners.length >= limitedSignNum,
+            "Multiple Signature : owners length should be greater than or equal to limitedSignNum"
+        );
         signatureOwners = owners;
         threshold = limitedSignNum;
+    }
+
+    modifier onlyOwner() {
+        require(
+            signatureOwners.isEligibleAddress(msg.sender),
+            "Multiple Signature : caller is not in the ownerList!"
+        );
+        _;
+    }
+
+    modifier validIndex(bytes32 msgHash, uint256 index) {
+        require(
+            index < signatureMap[msgHash].length,
+            "Multiple Signature : Message index is overflow!"
+        );
+        _;
     }
 }
